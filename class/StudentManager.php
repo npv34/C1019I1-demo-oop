@@ -66,4 +66,33 @@ class StudentManager
         return $arr;
     }
 
+    public function findById($index)
+    {
+        $data = $this->readFile();
+        if (array_key_exists($index, $data)) {
+            $student = new Student($data[$index]['name'],
+                $data[$index]['age'],
+                $data[$index]['address'],
+                $data[$index]['group']
+            );
+
+            return $student;
+        }
+    }
+
+    public function edit($student, $index) {
+        $listStudent = $this->readFile();
+
+        $data = [
+            'name' => $student->name,
+            'age' => $student->age,
+            'address' => $student->address,
+            'group' => $student->group
+        ];
+
+        $listStudent[$index] = $data;
+
+        $this->saveDataToFile($listStudent);
+    }
+
 }

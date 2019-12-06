@@ -68,6 +68,7 @@ $students = $studentManager->getList();
                     <th scope="col">Address</th>
                     <th scope="col">Group</th>
                     <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -79,6 +80,7 @@ $students = $studentManager->getList();
                     <td><?php echo $student->address ?></td>
                     <td><?php echo $student->group ?></td>
                     <td><a href="src/delete.php?index=<?php echo $key ?>" onclick="return confirm('Ban chac chan muon xoa khong')" class="btn btn-danger">Delete</a></td>
+                    <td><a href="src/edit.php?index=<?php echo $key ?>" class="btn btn-primary">Edit</a></td>
                 </tr>
                 <?php endforeach; ?>
                 </tbody>
