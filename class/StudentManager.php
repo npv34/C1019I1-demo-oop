@@ -95,4 +95,9 @@ class StudentManager
         $this->saveDataToFile($listStudent);
     }
 
+    public function search()
+    {
+
+    }
+
 }
