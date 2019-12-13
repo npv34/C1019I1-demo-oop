@@ -1,17 +1,16 @@
 <?php
 namespace Controller;
 
-class StudentManager
+class StudentManager extends Database
 {
-    public $pathFile;
     public function __construct($pathFile)
     {
-        $this->pathFile = $pathFile;
+        parent::__construct($pathFile);
     }
 
     public function add($student)
     {
-        $listStudent = $this->readFile();
+        $listStudent = $this->readDataFile();
 
         $data = [
             'name' => $student->name,
@@ -25,32 +24,16 @@ class StudentManager
 
     public function delete($index)
     {
-        $students = $this->readFile();
+        $students = $this->readDataFile();
         if (array_key_exists($index, $students)) {
             array_splice($students, $index, 1);
         }
         $this->saveDataToFile($students);
     }
 
-    public function readFile()
-    {
-        $dataJson = file_get_contents($this->pathFile);
-        return json_decode($dataJson, true);
-    }
-
-    public function saveDataToFile($students)
-    {
-        try {
-            $dataJson = json_encode($students);
-            file_put_contents($this->pathFile, $dataJson);
-        } catch (\Exception $e) {
-            echo $e->getMessage();
-        }
-    }
-
     public function getList()
     {
-        $data = $this->readFile();
+        $data = $this->readDataFile();
 
         $arr = [];
         foreach ($data as $item) {
@@ -68,7 +51,7 @@ class StudentManager
 
     public function findById($index)
     {
-        $data = $this->readFile();
+        $data = $this->readDataFile();
         if (array_key_exists($index, $data)) {
             $student = new Student($data[$index]['name'],
                 $data[$index]['age'],
@@ -81,7 +64,7 @@ class StudentManager
     }
 
     public function edit($student, $index) {
-        $listStudent = $this->readFile();
+        $listStudent = $this->readDataFile();
 
         $data = [
             'name' => $student->name,

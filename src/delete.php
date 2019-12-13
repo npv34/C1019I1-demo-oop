@@ -1,4 +1,7 @@
 <?php
+
+include_once "../class/DataInterface.php";
+include_once "../class/Database.php";
 include_once "../class/Student.php";
 include_once "../class/StudentManager.php";
 

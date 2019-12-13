@@ -1,4 +1,6 @@
 <?php
+include_once "class/DataInterface.php";
+include_once "class/Database.php";
 include_once "class/Student.php";
 include_once "class/StudentManager.php";
 
@@ -78,7 +80,7 @@ $students = $studentManager->getList();
                     <td><?php echo $student->name ?></td>
                     <td><?php echo $student->age ?></td>
                     <td><?php echo $student->address ?></td>
-                    <td><?php echo $student->group ?></td>
+                    <td><a href="src/groups/list-student.php?group-name=<?php echo $student->group ?>"><?php echo $student->group ?></a></td>
                     <td><a href="src/delete.php?index=<?php echo $key ?>" onclick="return confirm('Ban chac chan muon xoa khong')" class="btn btn-danger">Delete</a></td>
                     <td><a href="src/edit.php?index=<?php echo $key ?>" class="btn btn-primary">Edit</a></td>
                 </tr>
