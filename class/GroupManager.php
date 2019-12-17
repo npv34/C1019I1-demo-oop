@@ -12,7 +12,6 @@ class GroupManager extends Database
     {
         parent::__construct($pathFile);
         $this->studentManager = $studentManager;
-
     }
 
     public function getStudentsIntoGroup($groupName)

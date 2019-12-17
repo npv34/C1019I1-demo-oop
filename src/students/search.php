@@ -1,11 +1,18 @@
 <?php
-include_once "class/DataInterface.php";
-include_once "class/Database.php";
-include_once "class/Student.php";
-include_once "class/StudentManager.php";
 
-$studentManager = new \Controller\StudentManager("data.json");
-$students = $studentManager->getList();
+
+if ($_SERVER['REQUEST_METHOD'] == "GET") {
+    include_once "../../class/DataInterface.php";
+    include_once "../../class/Database.php";
+    include_once "../../class/Student.php";
+    include_once "../../class/StudentManager.php";
+    $keyword = $_GET['keyword'];
+
+    $pathFile = "../../data.json";
+    $studentManger = new \Controller\StudentManager($pathFile);
+    $students = $studentManger->search($keyword);
+}
+
 ?>
 
 <!doctype html>
@@ -57,10 +64,10 @@ $students = $studentManager->getList();
             <h1>Users</h1>
             <div class="row">
                 <div class="col-12 col-md-4">
-                    <button type="button" class="btn btn-outline-primary"><a href="src/add.php">Create</a></button>
+                    <button type="button" class="btn btn-outline-primary"><a href="../add.php">Create</a></button>
                 </div>
                 <div class="col-12 col-md-8">
-                    <form class="form-inline my-2 my-lg-0" method="get" action="src/students/search.php">
+                    <form class="form-inline my-2 my-lg-0" method="get" action="../students/search.php">
                         <input class="form-control mr-sm-2 search-input" type="search" placeholder="Search" aria-label="Search" name="keyword">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
@@ -82,17 +89,26 @@ $students = $studentManager->getList();
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($students as $key => $student):?>
-                <tr>
-                    <th scope="row"><?php echo $key + 1 ?></th>
-                    <td><?php echo $student->name ?></td>
-                    <td><?php echo $student->age ?></td>
-                    <td><?php echo $student->address ?></td>
-                    <td><a href="src/groups/list-student.php?group-name=<?php echo $student->group ?>"><?php echo $student->group ?></a></td>
-                    <td><a href="src/delete.php?index=<?php echo $key ?>" onclick="return confirm('Ban chac chan muon xoa khong')" class="btn btn-danger">Delete</a></td>
-                    <td><a href="src/edit.php?index=<?php echo $key ?>" class="btn btn-primary">Edit</a></td>
-                </tr>
-                <?php endforeach; ?>
+                <?php if (count($students) > 0): ?>
+                    <?php foreach ($students as $key => $student):?>
+                        <tr>
+                            <th scope="row"><?php echo $key + 1 ?></th>
+                            <td><?php echo $student->name ?></td>
+                            <td><?php echo $student->age ?></td>
+                            <td><?php echo $student->address ?></td>
+                            <td><a href="../groups/list-student.php?group-name=<?php echo $student->group ?>"><?php echo $student->group ?></a></td>
+                            <td><a href="../delete.php?index=<?php echo $key ?>" onclick="return confirm('Ban chac chan muon xoa khong')" class="btn btn-danger">Delete</a></td>
+                            <td><a href="../edit.php?index=<?php echo $key ?>" class="btn btn-primary">Edit</a></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                        <tr>
+                            <td colspan="7">
+                                <p class="text-center">Khong co du lieu</p>
+                            </td>
+                        </tr>
+                <?php endif; ?>
+
                 </tbody>
             </table>
         </div>

@@ -78,9 +78,17 @@ class StudentManager extends Database
         $this->saveDataToFile($listStudent);
     }
 
-    public function search()
+    public function search($keyword)
     {
-
+        $listStudent = $this->readDataFile();
+        $arr = [];
+        foreach ($listStudent as $item) {
+            if ($item['name'] == $keyword) {
+                $student = new Student($item['name'], $item['age'], $item['address'], $item['group']);
+                array_push($arr, $student);
+            }
+        }
+        return $arr;
     }
 
 }
